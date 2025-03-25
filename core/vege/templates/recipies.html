@@ -1,0 +1,74 @@
+{% extends "base.html"%}
+{%block start%}
+
+<br>
+<nav style="margin-left: 10px;">
+  <a class="btn btn-secondary" href="/about/">About</a>
+  |
+  <a class="btn btn-secondary" href="/contact/">Contact</a>
+  <!-- |
+  <a class="btn btn-secondary" href="/index/">Home</a> -->
+</nav>
+<div class="container mt-5">
+    <form class ="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>Add Receipe</h2>
+        <div class="mb-3">
+          <label for="exampleInputEmail1">Receipe Name</label>
+          <input type="text" name="r_name" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleInputPassword1">Receipe description</label>
+          <textarea class="form-control" required name="r_description"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1">Upload Image</label>
+            <input type="file" class="form-control" name="r_image"></input>
+        </div>
+
+        <button type="submit" class="btn btn-success">Add</button>
+      </form>
+    <div class="container mt-5">
+      <div class="mx-auto col-6">
+        <form>
+        <div class="mb-3">
+          <label class="form-label">Search food</label>
+          <input type="text" name="search_re"  class="form-control" placeholder="Enter" >
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+      </div>
+    </div>
+      <br>
+
+    <table class="container table table-sm mt-5" >
+       
+        <tr>
+            <th>Sr.No</th>
+            <th>Receipe</th>
+            <th><center>Description</center></th>
+            <th>Image</th>
+            <th>Delete</th>
+        </tr>
+
+
+        {% for r in receipes %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{r.r_name}}</td>
+          <td>{{r.r_description}}</td>
+          <td><img src ="/media/{{r.r_image}}" style="height: 100px;"></td>
+          <td><a href="/delete-receipe/{{r.id}}/" class="btn btn-danger m-2">Delete</a>
+            <a href="/update_rec/{{r.id}}/" class="btn btn-primary m-2">Update</a>
+          </td>
+        </tr>
+        {% endfor %}
+
+
+    </table>
+
+
+</div>
+    
+{% endblock %}
