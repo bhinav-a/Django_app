@@ -17,27 +17,29 @@ class Department(models.Model):
     
     class Meta :
         ordering = ['department']
+        verbose_name = "department"
+         
 
 class StudentId(models.Model):
-    student_id = models.CharField(max_length=100)
+    S_Id = models.CharField(max_length=100)
 
     def __str__(self) -> str:
-        return self.student_id
+        return self.S_Id
     
 
 class Student(models.Model):
     
-    S_Department = models.ForeignKey(Department , related_name="depart" , on_delete=models.CASCADE)
+    department = models.ForeignKey(Department , related_name="depart" , on_delete=models.CASCADE)
     S_Id = models.OneToOneField(StudentId , on_delete=models.CASCADE , related_name="studentid")
     S_name = models.CharField(max_length=100)
     S_email = models.EmailField(unique=True)
-    S_phone = models.CharField(default=18)
+    S_age = models.CharField(default=18 , max_length=3)
     S_address = models.TextField()   
 
     def __str__(self) -> str:
-        return self.student_name
+        return self.S_name
 
     class Meta :
-        ordering  = ['student_name']
+        ordering  = ['S_name']
         verbose_name = "student"
-         
+
