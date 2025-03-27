@@ -25,7 +25,12 @@ class StudentId(models.Model):
 
     def __str__(self) -> str:
         return self.S_Id
+ 
+class Subject(models.Model):
+    subject = models.CharField(max_length=100)  
     
+    def __str__(self)-> str:
+        return self.subject
 
 class Student(models.Model):
     
@@ -43,3 +48,16 @@ class Student(models.Model):
         ordering  = ['S_name']
         verbose_name = "student"
 
+
+class SubjectMarks(models.Model):
+    student = models.ForeignKey(Student , on_delete=models.CASCADE , related_name="studentmarks")
+    subject = models.ForeignKey(Subject , on_delete=models.CASCADE)
+    marks = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.student.S_name} {self.subject.subject}'
+
+    class Meta :
+        unique_together = ['student' , 'subject']
+
+    

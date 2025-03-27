@@ -4,7 +4,9 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate ,login , logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 # Create your views here.
+
 @login_required(login_url="/login/")
 def recepies(request):
     if request.method == "POST":
@@ -105,3 +107,19 @@ def register_page(request):
         messages.success(request , 'User created successfully')
         return redirect('/register/')
     return render(request , 'register.html')
+
+def get_students(request):
+
+     
+    queryset = Student.objects.all()
+
+    if request.GET.get('search'):
+        search = request.GET.get('search')
+        queryset = queryset.filter(S_name__icontains = search)
+
+    paginator = Paginator(queryset, 10)  # Show 25 contacts per page.
+
+    page_number = request.GET.get("page",1)
+    page_obj = paginator.get_page(page_number)
+    # print(page_obj)
+    return render (request , 'reports/students.html' , {'queryset' : page_obj})
