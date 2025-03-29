@@ -35,6 +35,7 @@ urlpatterns = [
     path('register/' , register_page , name='register_page'),
     path('logout/' , logout_page , name='logout_page'),
     path('reports/students/' , get_students , name='students'),
+    path('reports/see_marks/<S_Id>/' , see_marks , name='see_marks'),
 ]
 
 if settings.DEBUG:

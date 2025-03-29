@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate ,login , logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import Q , Sum
 # Create your views here.
 
 @login_required(login_url="/login/")
@@ -123,3 +124,8 @@ def get_students(request):
     page_obj = paginator.get_page(page_number)
     # print(page_obj)
     return render (request , 'reports/students.html' , {'queryset' : page_obj})
+
+def see_marks(request , S_Id):
+    queryset = SubjectMarks.objects.filter(student__S_Id__S_Id = S_Id)
+    total_marks = queryset.aggregate(total_marks = Sum('marks'))
+    return render(request , 'reports/see_marks.html' , {'queryset' : queryset , 'total_marks' : total_marks , 'Id':S_Id})

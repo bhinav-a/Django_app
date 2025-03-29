@@ -28,7 +28,11 @@
             {% for student in queryset %}
           <tr>
             <th scope="row">{{forloop.counter}}</th>
-            <td>{{student.S_Id}}</td>
+            <td>
+            <a href="/reports/see_marks/{{student.S_Id}}/">{{student.S_Id}}</a>  
+              
+            
+            </td>
             <td>{{student.department}}</td>
             <td>{{student.S_name}}</td>
             <td>{{student.S_email}}</td>
